@@ -77,4 +77,43 @@ curl -X POST http://localhost:1323/itinerary -H "Content-Type: application/json"
 ["JFK","LAX","DXB","SFO","SJC"]
 ```
 
+# Performance Testing
+
+## Generating Test Data
+
+This utility allows for the generation of large-scale test data to evaluate the performance of the itinerary reconstruction service. The data consists of randomly generated flight ticket pairs.
+
+### Expanded List of Airport Codes
+
+The script includes an expanded list of fictitious airport codes beyond real-world major airport codes to simulate scenarios with a large dataset.
+
+### Generating Tickets
+
+The tickets are generated such that each ticket pair is connected end-to-end in a shuffled order to simulate a randomized set of flight connections without creating loops. This setup helps in simulating the real-world scenario where flight itineraries might need to be reconstructed from shuffled data.
+
+To generate test data, navigate to the `testutils` directory and run the following command:
+
+    go run ./main.go --generate --tickets 900 > ./generated_data.json
+
+This command generates 900 ticket pairs and saves them in `generated_data.json`.
+
+## Load Testing
+
+The load testing script sends the generated ticket data as a JSON payload to the itinerary reconstruction endpoint and measures the response time and server's response to assess the application's performance under load.
+
+### Running Load Test
+
+After generating the data, you can perform the load test by running:
+
+    go run ./main.go --loadtest --url http://localhost:1323/itinerary
+
+This command reads the generated JSON data from `generated_data.json` and posts it to the specified URL, which is the itinerary endpoint. The script then outputs the response time and the server response, allowing you to assess how quickly and accurately the server processes the large input.
+
+## What This Does
+
+1. **Generate TestData**: The `generateTestData` function creates a large number of ticket pairs using an extensive list of airport codes. The function ensures that the list of tickets is shuffled to provide varied starting points and paths for the reconstruction algorithm, which mimics a real-world input scenario where data may not be sequentially ordered.
+
+2. **Run Load Test**: The `runLoadTest` function performs a POST request with the generated ticket data to the server's itinerary endpoint. It measures how long the server takes to respond and prints out the response time and the actual JSON response from the server. This helps in identifying the performance characteristics of the application, such as response times and accuracy of the itinerary reconstruction.
+
+
 Thank you for using the Itinerary Reconstructor.
