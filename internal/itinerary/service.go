@@ -2,6 +2,7 @@ package itinerary
 
 import (
 	"errors"
+	"fmt"
 )
 
 // Service provides itinerary reconstruction functionality.
@@ -18,49 +19,49 @@ func (s *Service) ReconstructItinerary(tickets []TicketPair) ([]string, error) {
 		return nil, errors.New("no tickets provided")
 	}
 
+	flightMap := make(map[string]string)
+	destinations := make(map[string]bool)
+
+	for _, ticket := range tickets {
+		if _, exists := flightMap[ticket[0]]; exists {
+			return nil, fmt.Errorf("invalid ticket chain: multiple entries for %s", ticket[0])
+		}
+		flightMap[ticket[0]] = ticket[1]
+		destinations[ticket[1]] = true
+	}
+
 	// Find the starting point
-	start, err := findStart(tickets)
-	if err != nil {
-		return nil, err
+	start := ""
+	for src := range flightMap {
+		if !destinations[src] {
+			if start != "" {
+				return nil, errors.New("multiple possible start points")
+			}
+			start = src
+		}
+	}
+	if start == "" {
+		return nil, errors.New("cannot find the start of the itinerary")
 	}
 
 	// Reconstruct the itinerary
 	itinerary := []string{start}
+	current := start
+	usedTickets := make(map[string]bool)
+
 	for {
-		if len(itinerary)-1 == len(tickets) {
+		next, exists := flightMap[current]
+		if !exists || usedTickets[current] {
 			break
 		}
-		next, err := findNextDestination(itinerary[len(itinerary)-1], tickets)
-		if err != nil {
-			return nil, err
-		}
 		itinerary = append(itinerary, next)
+		usedTickets[current] = true
+		current = next
+	}
+
+	if len(itinerary) != len(tickets)+1 {
+		return nil, errors.New("itinerary cannot be completed from the given tickets")
 	}
 
 	return itinerary, nil
-}
-
-// findStart finds the starting airport code.
-func findStart(tickets []TicketPair) (string, error) {
-	destinationCounts := make(map[string]int)
-	for _, pair := range tickets {
-		destinationCounts[pair[1]]++
-	}
-
-	for _, pair := range tickets {
-		if destinationCounts[pair[0]] == 0 {
-			return pair[0], nil
-		}
-	}
-	return "", errors.New("cannot find the start of the itinerary")
-}
-
-// findNextDestination finds the next destination given a source.
-func findNextDestination(source string, tickets []TicketPair) (string, error) {
-	for _, pair := range tickets {
-		if pair[0] == source {
-			return pair[1], nil
-		}
-	}
-	return "", errors.New("next destination not found")
 }

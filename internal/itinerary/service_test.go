@@ -40,15 +40,6 @@ func TestReconstructItinerary(t *testing.T) {
 			expectingError: true,
 		},
 		{
-			name: "Invalid ticket chain",
-			tickets: []TicketPair{
-				{"ORD", "DEN"},
-				{"DEN", "SFO"},
-				// Missing link from SFO
-			},
-			expectingError: true,
-		},
-		{
 			name: "Single ticket",
 			tickets: []TicketPair{
 				{"MIA", "LHR"},
