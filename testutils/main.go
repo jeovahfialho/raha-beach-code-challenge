@@ -20,13 +20,12 @@ func generateTestData(numTickets int) []byte {
 		"JFK", "LAX", "DXB", "SFO", "SJC", "ORD", "ATL", "PEK", "CDG", "AMS",
 		"FRA", "DEN", "ICN", "MAD", "LAS", "BCN", "MUC", "SEA", "FCO", "BKK",
 		"MCO", "EWR", "IST", "YYZ", "SYD", "IAH", "CAN", "DEL", "MIA", "MEX",
-		"PHX", "LGA", "MNL", "CGK", "SZX", "MSP", "PHL", "BOS", "CTU", "IAH",
-		"PVG", "IAD", "YYZ", "MEL", "DUB", "CLT", "ZRH", "MAN", "TXL", "KUL",
-		"BRU", "OSL", "ARN", "ATH", "VIE", "CPH", "HAM", "NRT", "HEL", "PMI",
-		"SAW", "EDI", "CAI", "CTU", "CGK", "KMG", "CGO", "CSX", "CJU", "CTU",
-		"XMN", "WUH", "XIY", "TAO", "TPE", "KHH", "CNX", "BKI", "COK", "HKT",
-		"USM", "DPS", "SUB", "OKA", "KIX", "NRT", "HND", "KUL", "BOM", "DEL",
-		"MAA", "CCU", "HYD", "AMD", "BLR", "GOI", "COK", "TRV",
+		"PHX", "LGA", "MNL", "CGK", "SZX", "MSP", "PHL", "BOS", "CTU", "PVG",
+		"IAD", "ABC", "MEL", "DUB", "CLT", "ZRH", "MAN", "TXL", "KUL", "BRU",
+		"OSL", "ARN", "ATH", "VIE", "CPH", "HAM", "NRT", "HEL", "PMI", "SAW",
+		"EDI", "CAI", "KMG", "CGO", "CSX", "CJU", "XMN", "WUH", "XIY", "TAO",
+		"TPE", "KHH", "CNX", "BKI", "COK", "HKT", "USM", "DPS", "SUB", "OKA",
+		"KIX", "HND", "BOM", "MAA", "CCU", "HYD", "AMD", "BLR", "GOI", "TRV",
 	}
 
 	// Gerar mais aeroportos
@@ -42,11 +41,6 @@ func generateTestData(numTickets int) []byte {
 		dst := airports[(i+1)%len(airports)]
 		tickets = append(tickets, []string{src, dst})
 	}
-
-	// Embaralhar a lista de tickets
-	rand.Shuffle(len(tickets), func(i, j int) {
-		tickets[i], tickets[j] = tickets[j], tickets[i]
-	})
 
 	// Adicionar a última conexão encadeada sem incluir o primeiro aeroporto
 
