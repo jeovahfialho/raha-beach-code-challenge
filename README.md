@@ -43,10 +43,18 @@ Comprehensive unit tests ensure the application meets all functional requirement
 
 - Run tests with `go test ./...`.
 
-## Assessment Criteria
-1. **Functionality**: The application meets all requirements detailed in the spec.
-2. **Code Quality**: The source code is clean and adheres to industry standards.
-3. **Performance**: The app is performance optimized and responds quickly.
+## Fulfilling Requirements and Criteria
+- **Single Endpoint**: `internal/itinerary/handler.go` - `handleItinerary` function.
+- **Input Format**: `internal/itinerary/types.go` - `TicketPair` type.
+- **Functionality**: `internal/itinerary/service.go` - `ReconstructItinerary` method.
+- **Expected Output**: `internal/itinerary/service.go` - `ReconstructItinerary` method.
+- **Testing**: `internal/itinerary/service_test.go` - `TestReconstructItinerary` method.
+- **Deliverables**: All source files, configuration files, and `README.md`.
+
+### Acceptance Criteria Mapped
+1. **Functionality**: Validated by unit tests in `service_test.go` and endpoint functionality in `handler.go`.
+2. **Code Quality**: Demonstrated by the project's organized structure and clear code documentation.
+3. **Performance**: Ensured by the Echo framework used in `server.go` and the algorithm in `service.go`.
 
 ## Running the Application
 To start the application:
@@ -60,7 +68,7 @@ Then you can send a POST request to `http://localhost:1323/itinerary` with the J
 ## Example Request
 
 ```
-curl -X POST http://localhost:1323/itinerary -d '[["JFK","LAX"],["LAX","DXB"],["DXB","SFO"],["SFO","SJC"]]'
+curl -X POST http://localhost:1323/itinerary -H "Content-Type: application/json" -d '[["JFK","LAX"],["LAX","DXB"],["DXB","SFO"],["SFO","SJC"]]'
 ```
 
 ## Example Response
