@@ -24,7 +24,11 @@ To run this application, you need Go installed on your machine.
 4. Build the Docker image using the Dockerfile:
 
 ```bash
-docker build -t itinerary-reconstructor .
+docker-compose up --build
+```
+To stop
+```bash
+docker-compose down --build
 ```
 
 ## Project Structure
