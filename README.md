@@ -5,6 +5,9 @@
 This Go web application uses the Echo framework to provide an HTTP endpoint that reconstructs a complete flight itinerary from a series of flight tickets represented as JSON pairs.
 
 ## Installation
+
+### Option 1: Running Locally
+
 To run this application, you need Go installed on your machine.
 
 1. Install Go from [the official website](https://golang.org/dl/).
@@ -12,6 +15,17 @@ To run this application, you need Go installed on your machine.
 3. Navigate to the root directory of the project.
 4. Run `go mod tidy` to install the dependencies.
 5. Start the server with `go run ./cmd/main.go`.
+
+### Option 2: Running with Docker
+
+1. Ensure you have Docker installed on your system.
+2. Clone the repository to your local machine.
+3. Navigate to the root directory of the project.
+4. Build the Docker image using the Dockerfile:
+
+```bash
+docker build -t itinerary-reconstructor .
+```
 
 ## Project Structure
 The project follows a clean architecture that separates concerns, making the code more maintainable and scalable.
