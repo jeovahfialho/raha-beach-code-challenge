@@ -21,7 +21,7 @@ To run this application, you need Go installed on your machine.
 1. Ensure you have Docker installed on your system.
 2. Clone the repository to your local machine.
 3. Navigate to the root directory of the project.
-4. Build the Docker image using the Dockerfile:
+4. Build the Docker image using the Docker Compose:
 
 ```bash
 docker-compose up --build
