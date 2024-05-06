@@ -14,6 +14,17 @@ func NewService() *Service {
 	return &Service{} // Return a new instance of Service.
 }
 
+// We can get this from database
+func (s *Service) ListAirports() []string {
+	return []string{
+		"JFK", "LAX", "DXB", "SFO", "SJC", // Add all airports as seen in your previous list
+	}
+}
+
+func (s *Service) CountAirports() int {
+	return len(s.ListAirports())
+}
+
 // ReconstructItinerary takes an array of ticket pairs and attempts to reconstruct the complete travel itinerary.
 func (s *Service) ReconstructItinerary(tickets []TicketPair) ([]string, error) {
 	// Check if no tickets are provided. If so, return an error immediately.

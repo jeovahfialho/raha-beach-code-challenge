@@ -75,7 +75,7 @@ func main() {
 	flag.BoolVar(&genData, "generate", false, "Generate test data")
 	flag.BoolVar(&runTest, "loadtest", false, "Run load test")
 	flag.IntVar(&numTickets, "tickets", 100, "Number of tickets to generate")
-	flag.StringVar(&endpointURL, "url", "http://localhost:1323/itinerary", "Endpoint URL for load testing")
+	flag.StringVar(&endpointURL, "url", "http://localhost:1323/itineraries", "Endpoint URL for load testing")
 	flag.Parse() // Parse command-line flags.
 
 	if genData {

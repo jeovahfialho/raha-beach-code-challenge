@@ -10,7 +10,21 @@ import (
 // RegisterHandlers sets up the routes and links them to handler functions.
 func RegisterHandlers(e *echo.Echo) {
 	// Register the POST method for the "/itinerary" route and link it to the handleItinerary function.
-	e.POST("/itinerary", handleItinerary)
+	e.POST("/itineraries", handleItinerary)
+	e.GET("/airports", listAirportsHandler)
+	e.GET("/airports/count", countAirportsHandler)
+}
+
+func listAirportsHandler(c echo.Context) error {
+	service := NewService()
+	airports := service.ListAirports()
+	return c.JSON(http.StatusOK, airports)
+}
+
+func countAirportsHandler(c echo.Context) error {
+	service := NewService()
+	count := service.CountAirports()
+	return c.JSON(http.StatusOK, map[string]int{"count": count})
 }
 
 // handleItinerary processes POST requests to compute an itinerary from a series of ticket pairs.
